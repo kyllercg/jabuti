@@ -1,0 +1,154 @@
+		%{
+/*
+ * Filename:	sg_yacc.ypp
+ * Author:		Kyller Costa Gorgônio (kyller@lsi.upc.edu)
+ *
+ * $Id$
+ *
+ * Copyright (C) 2004, 2008 - Kyller Costa Gorgônio
+ * Copyright (C) 2004, 2008 - Universitat Politècnica de Catalunya
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+#include <stdio.h>
+
+#include "SGParser.h"
+#include "sg.h"
+
+extern SGParser sgparser;
+extern int lineNumber;
+
+%}
+
+%union {
+	int iValue;				/* integer value */
+	char sValue[32];		/* string value */
+};
+
+%token <iValue> NUMBER
+%token <sValue> ID
+%token CHANNEL PROCESS END
+%token STATE ARC
+%token READ WRITE
+%token SIGNAL MESSAGE POOL
+
+%%
+
+System: Channels
+        Processes
+        ;
+        
+Channels: Channel Channels
+          | Channel
+          ;
+
+Channel: CHANNEL ChannelName NUMBER ChannelType';'	{
+													 sgparser.setMem($3);
+													}
+         ;
+
+ChannelName: ID							{
+										 sgparser.insertChannel($1);
+										}
+			 ;
+
+ChannelType: SIGNAL						{
+										 sgparser.setType(SIGNAL);
+										}
+			 | MESSAGE					{
+										 sgparser.setType(MESSAGE);
+										}
+			 | POOL						{
+			 							 sgparser.setType(POOL);
+			 							}
+			 ;
+			
+Processes: Process Processes
+           | Process
+           ;
+           
+Process: PROCESS ProcessName
+             Events 
+         END
+		 ;
+
+ProcessName: ID							{
+										 sgparser.insertProcess($1);
+										}
+			 ;
+			 
+Events: Event Events
+        | Event
+        ;
+
+Event: SrcState EventName DestState ';' {
+										 sgparser.insertArc();
+										}
+	   ;
+
+EventName: ID						{
+									 sgparser.setArc($1);
+									}
+		   | READ '(' ID ')'		{
+		   							 sgparser.setArc($3, READ);
+		   							}
+		   | WRITE '(' ID ')'		{
+		   							 sgparser.setArc($3, WRITE);
+		   							}
+		   ;
+		   
+SrcState: ID						{
+									 sgparser.setSrc(sgparser.insertState($1));
+									}
+		   ;
+
+DestState: ID						{
+									 sgparser.setDest(sgparser.insertState($1));
+									}
+		   ;
+
+%%
+
+/*
+ * \brief	Prints an error message.
+ *
+ * \fn		void yyerror(char *mesg)
+ * \param	*mesg: error message.
+ * 
+ * \author	Kyller Costa Gorgônio (kyller@lsi.upc.edu)
+ * \date	25/05/2004
+ */
+void yyerror(char *mesg)
+{
+	fprintf(stderr, "line %d ---  %s\n", lineNumber, mesg);
+	sgparser.hasErrors(true);
+}
+
+/*
+ * \brief	Prints an error message.
+ *
+ * \fn		void yyerror2(char *mesg, char *v)
+ * \param	*mesg: error message.
+ * \param	*v: identifier related to the error.
+ * 
+ * \author	Kyller Costa Gorgônio (kyller@lsi.upc.edu)
+ * \date	25/05/2004
+ */
+void yyerror2(char *mesg, char *v)
+{
+	fprintf(stderr, "line %d, %s %s\n", lineNumber, v, mesg);
+	sgparser.hasErrors(true);
+}

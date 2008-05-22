@@ -1,0 +1,95 @@
+# $Id$
+
+
+Jabuti
+======
+
+Version: 0.4.2 --- December, 2004
+
+jabuti is Copyright (C) 2004, 2008 - Kyller Costa Gorgônio
+jabuti is Copyright (C) 2004, 2008 - Universitat Politècnica de Catalunya
+
+Author: Kyller Costa Gorgônio (kyller@lsi.upc.edu)
+
+
+###############################################################################
+
+What is Jabuti?
+---------------
+
+Jabuti is a system to make the synthesis of Asynchronous Communication
+Mechanisms.
+
+In a more precisely way, Jabuti is a program that takes as input a description
+of a system composed by a number of process and communication channels and
+makes the composition of all process in order to obtain a uniq process that
+preserves the properties of the policy that should be implemented by the
+communication channels.
+
+Ahhhh, Jararaca is the name used in Brasil for a king of turtle very common in
+the in the Amazon region.
+
+
+###############################################################################
+
+Distribution
+------------
+
+Jabuti can be found in the following web address:
+
+http://www.lsi.upc.es/~kyller/jabuti/
+
+
+###############################################################################
+
+Requirements
+------------
+
+Jabuti was developed under the following environment. At the present time I do
+not know what is necessary to make it to run in other systems.
+
+	* Linux version 2.4.19
+	* g++ version 2.95.4 20011002 (Debian prerelease)
+	* bison (GNU Bison) 1.875a
+	* lex version 2.5.4
+	* autoconf (GNU Autoconf) 2.59
+	* automake (GNU Automake) 1.8.4
+
+
+###############################################################################
+
+How to compile it
+-----------------
+
+After downloading the source code, it is necessary to execute the commands
+below to compile Jabuti.
+
+	$ tar zxvf jabuti.tar.gz
+	$ cd jabuti
+	$ ./configure
+	$ make
+
+In the above commands, it is required to substitute the string "jabuti" by
+"jabuti-<version>", where "<version>" stands for the version number of the
+jabuti that you have downloaded. For example jabuti-0.3.1.
+
+
+###############################################################################
+
+How to execute it?
+------------------
+
+Once you have compiled jabuti, you will find the executable file in the
+directory:
+
+	<jabuti_dir>/src/acms/
+
+So, to run jabuti will should execute something like:
+
+	src/acms/jabuti <input_file>
+
+and jabuti will generates its result in the standard output of the system.
+
+If you want you can also copy the jabuti executable to some other directory or
+even try "make install" (I did not test it).
+

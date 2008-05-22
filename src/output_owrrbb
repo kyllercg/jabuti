@@ -1,0 +1,8 @@
+2 --> # 80 states -- 160 arcs
+3 --> # 360 states -- 720 arcs
+4 --> # 1120 states -- 2240 arcs
+5 --> # 3000 states -- 6000 arcs
+6 --> # 7440 states -- 14880 arcs
+7 --> # 17640 states -- 35280 arcs
+8 --> # 40640 states -- 81280 arcs
+9 --> # 91800 states -- 183600 arcs

@@ -1,0 +1,100 @@
+%{
+/*
+ * Filename:	sg_lex.lpp
+ * Author:		Kyller Costa Gorgônio (kyller@lsi.upc.edu)
+ *
+ * $Id$
+ *
+ * Copyright (C) 2004, 2008 - Kyller Costa Gorgônio
+ * Copyright (C) 2004, 2008 - Universitat Politècnica de Catalunya
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+#include "sg_yacc.h"
+#include "SGParser.h"
+#include "sg.h"
+
+#define _MAX_ID_SIZE				256
+
+int lineNumber = 1;
+%}
+
+/* some definitions */
+delim		[ \t]
+ws			{delim}+
+spec		[_]
+alpha		[A-Za-z]
+digit		[0-9]
+id			({alpha}|{spec})({alpha}|{digit}|{spec})*
+number		{digit}+
+comment		[#]
+
+%%
+
+"#".*\n		{lineNumber++;}
+"\n"		{lineNumber++;}
+{ws}		{/* in this case do nothing */}
+
+CHANNEL		{return(CHANNEL);}
+channel		{return(CHANNEL);}
+
+END			{return(END);}
+end			{return(END);}
+
+PROCESS		{return(PROCESS);}
+process		{return(PROCESS);}
+
+READ		{return(READ);}
+read		{return(READ);}
+
+WRITE		{return(WRITE);}
+write		{return(WRITE);}
+
+SIGNAL		{return(SIGNAL);}
+signal		{return(SIGNAL);}
+
+MESSAGE		{return(MESSAGE);}
+message		{return(MESSAGE);}
+
+POOL		{return(POOL);}
+pool		{return(POOL);}
+
+";"			{return(';');}
+"("			{return('(');}
+")"			{return(')');}
+
+{id}		{
+			 if(strlen(yytext) <= _MAX_ID_SIZE) {
+			 
+			 	strcpy(yylval.sValue, yytext);
+			 } else {
+			 
+			 	yyerror2(_SGPARSER_ERROR_ID_SIZE, yytext);
+			 }
+			 return(ID);
+			}
+			
+{number}	{
+			 yylval.iValue = atoi(yytext);
+			 return (NUMBER);
+			}
+
+%%
+
+int yywrap(void) {
+
+	return(1);
+}

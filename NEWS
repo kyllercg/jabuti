@@ -1,0 +1,79 @@
+# $Id$
+
+-------------------------------------------------------------------------------
+21/10/2004
+
+* The "parser" module was merged with the "sg" (the old "occ") module. The
+  "Parser" class was also renamed to "SGParser".
+
+* Added support to comments into the specification file.
+
+* CVS repository reseted, and files added with target jabuti-0_4_0.
+
+* BUG fix: the last variable was not beeing properly setted for the case of n >
+  2 cells.
+
+* Bug fix: solved the code incompatibility with gcc 3.2.2.
+
+* Added more files to the distribution package.
+
+* Released Jabuti 0.4.1
+
+-------------------------------------------------------------------------------
+19/10/2004
+
+* Jabuti-0.4.0 released.
+
+* Added support for the synthesis of "n" cells ACMs. Implemented policies are: 
+
+	- RR-BB (n cells, 1 slot/cell)
+	- OW-BB (n cells, 2 slots/cell)
+	- OW-RR-BB (n cells, 2 slots/cell)
+
+-------------------------------------------------------------------------------
+07/09/2004
+
+* Jabuti-0.3.2 released.
+
+* Correction of a bug related with the generation of new states when the event
+  involved is not an IO event.
+
+-------------------------------------------------------------------------------
+29/07/2004 
+
+* Jabuti-0.3.1 released.
+
+* The documentation files were included in the distribution file.
+
+* A bug on the file src/parser/Makefile.am was founded and fixed.  This bug has
+  the efectt of avoiding a correct generation of the Makefile. And the bison
+  (yacc) was not being executed before flex (lex).
+
+-------------------------------------------------------------------------------
+28/07/2004
+
+* Jabuti-0.3.0 released.
+
+* Added support for the synthesis of ACMs with channel that implements the
+  MESSAGE policy. Tis support includes channel with two or more slots.
+
+-------------------------------------------------------------------------------
+21/07/2004
+
+* Jabuti-0.2.0 released.
+
+* The first version of Jabuti is ready. At the time it is able to proceed with
+  the synthesis of SIGNAL ACMs, with channels with 2 or more slots.
+
+-------------------------------------------------------------------------------
+10/06/2004
+
+* Problems with the repository. Remove and init it again.
+
+-------------------------------------------------------------------------------
+08/06/2004
+
+* Creation of the tag "revision_1_0" in the CVS repository. It was done because
+  I´m started migrating the parser code from C to C++.  And now the parser is a
+  class of the system.
+

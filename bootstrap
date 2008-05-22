@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# $Id: bootstrap,v 1.2 2006-06-02 15:39:35 kyller Exp $
+
+set -x
+aclocal
+#autoheader
+automake --add-missing --include-deps --copy
+autoconf

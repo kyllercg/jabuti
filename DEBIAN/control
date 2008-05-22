@@ -1,0 +1,14 @@
+Package: jabuti
+Version: 0.4.2
+Section: devel
+Priority: optional
+Architecture: i386
+Depends: libc6 (>= 2.3.4-1)
+Suggests: 
+Installed-Size: 
+Maintainer: Kyller Costa Gorgonio <kyller@lsi.upc.edu>
+Source: 
+Description: Tool for generating ACM state graphs specifications.
+  Jabuti is a command line tool to generate a state graph specification of
+  RRBB, OWBB or OWRRBB ACMs of size n (n >= 2). The result is printed is the
+  standard output using the petrify notation for state graphs.
